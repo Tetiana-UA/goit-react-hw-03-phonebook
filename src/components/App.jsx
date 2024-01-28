@@ -11,13 +11,33 @@ class App extends Component {
   
   state = {
     contacts: [
-        {id: "1", name:"Тетяна", number:"0979858200"},
+        
     ],
     filter: '',
   }
 
+  //У 3 домашній роботі  додаємо зберігання контактів телефонної книги в localStorage. Використовуємо методи життєвого циклу. Решта коду з 2 домашньої роботи.
+  componentDidMount(){
+    const contacts=JSON.parse(localStorage.getItem("my-contacts"));
+    if(contacts?.length){
+        this.setState({
+          contacts, 
+        })
+    }
+}
+  componentDidUpdate(_, prevState) {
+  const{contacts}=this.state;
+  if(prevState.contacts.length !== contacts.length){
+    console.log("update contacts");
+    localStorage.setItem("my-contacts", JSON.stringify(this.state.contacts) )
+  }
+}
+
+
+//Перевіряємо на повтори контактів при введенні
   isDublicate ({name,number}) {
     const{contacts}=this.state;
+    console.log("name");
 
     const normalizedName=name.toLowerCase();
     const normalizedNumber=number.toLowerCase();
@@ -25,13 +45,16 @@ class App extends Component {
     const dublicate=contacts.find(item=>{
       const normalizedCurrentName=item.name.toLowerCase();
       const normalizedCurrentNumber=item.number.toLowerCase();
-      return (normalizedCurrentName === normalizedName && normalizedCurrentNumber === normalizedNumber );
+      return (normalizedCurrentName === normalizedName || normalizedCurrentNumber === normalizedNumber );
     })
     return Boolean(dublicate);
+    
   }
+
 
   addContact = (data) => {
     if(this.isDublicate(data)) {
+      console.log(data);
       return alert (`Contact with ${data.name} and ${data.number} already in list`)
     }
     this.setState(({contacts}) => {
