@@ -1,0 +1,22 @@
+.filter{
+    width: 500px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    
+}
+.filterLabel{
+    font-size: 20px;
+    margin-right: 5px;
+    }
+
+.filterInput{
+        
+        background-color: #bed8e8;
+        color: rgb(27, 26, 26);
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 300px;
+    }
